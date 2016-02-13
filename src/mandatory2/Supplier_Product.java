@@ -8,62 +8,51 @@ package mandatory2;
 /**
  *
  * @author piees
+ * Supplier_Product er laget med en pris og produkt.
+ * Dette er for at suppliers skal kunne sette en innkjøpspris for varer
  */
-public class Supplier_Product extends Product {
-    private String name;
+public class Supplier_Product {
     private int prod_id;
-    private int store_price;
-    private int inventory = 0;
-    private int recommended_inventory;
-    static private int prod_id_counter = 0;
+    private int price;
+    static private int id_counter = 0;
+    private Product product;
     
-    private Supplier_Product(String name, int price) {
-        super(name, price);
+    private Supplier_Product(int price, Product product) {
+        this.price = price;
+        this.product = product;
+        id_counter++;
+        prod_id = id_counter;
     }
 
-    @Override
-    public void setRecommended_inventory(int recommended_inventory) {
-        super.setRecommended_inventory(recommended_inventory); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setInventory(int inventory) {
-        super.setInventory(inventory); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setStore_price(int store_price) {
-        super.setStore_price(store_price); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getRecommended_inventory() {
-        return super.getRecommended_inventory(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getStore_price() {
-        return super.getStore_price(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getInventory() {
-        return super.getInventory(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public int getProd_id() {
-        return super.getProd_id(); //To change body of generated methods, choose Tools | Templates.
+        return prod_id;
     }
 
-    @Override
-    public String getName() {
-        return super.getName(); //To change body of generated methods, choose Tools | Templates.
+    public void setProd_id(int prod_id) {
+        this.prod_id = prod_id;
     }
-    
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public static int getId_counter() {
+        return id_counter;
+    }
+
+    public static void setId_counter(int id_counter) {
+        Supplier_Product.id_counter = id_counter;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

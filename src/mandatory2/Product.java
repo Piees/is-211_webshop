@@ -8,7 +8,7 @@ package mandatory2;
 /**
  *
  * @author piees
- * Product blir opprettet med et navn, butikkpris og en anbefalt inventory
+ * Product blir opprettet med et navn, butikkpris og anbefalt inventory
  */
 public class Product {
     private String name;
@@ -18,7 +18,7 @@ public class Product {
     private int recommended_inventory;
     static private int prod_id_counter = 0;
     
-    Product(String name, int price, int recommended_inventory) {
+    private Product(String name, int price, int recommended_inventory) {
         this.name = name;
         this.store_price = price;
         prod_id_counter++;
@@ -34,16 +34,12 @@ public class Product {
         return prod_id;
     }
 
-    public int getInventory() {
-        return inventory;
-    }
-
-    public int getStore_price() {
+    public int getPrice() {
         return store_price;
     }
 
-    public int getRecommended_inventory() {
-        return recommended_inventory;
+    public int getInventory() {
+        return inventory;
     }
 
     public void setName(String name) {
@@ -56,10 +52,6 @@ public class Product {
 
     public void setInventory(int inventory) {
         this.inventory = inventory;
-    }
-
-    public void setRecommended_inventory(int recommended_inventory) {
-        this.recommended_inventory = recommended_inventory;
     }
     
 }
