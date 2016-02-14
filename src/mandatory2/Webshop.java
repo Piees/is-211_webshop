@@ -89,6 +89,11 @@ public class Webshop {
         return cheapestSupplier;
     }
     
+    /**
+     * Utfører en backOrder og gjør endringer i balance og inventory
+     * @param product
+     * @param amount 
+     */
     public void placeBackOrder(Product product, int amount) {
         BackOrder backOrder = new BackOrder(this, findCheapestSupplier(product));
         SupplierProduct supplierProduct = null;
@@ -109,11 +114,17 @@ public class Webshop {
         }
     }
     
+    /**
+     * Legger til et produkt til order, om det ikke er nok inventory blir det
+     * gjort en placeBackOrder deretter en rekursjon som prøver å legge til
+     * produktet på nytt
+     * @param product
+     * @param amount
+     * @param order 
+     */
     public void addProductToOrder(Product product, int amount, Order order) {
         if((product.getInventory() - amount) >= 0) {
             OrderLine orderLine = order.createOrderLine(product, amount);
-//        OrderLine orderLine = new OrderLine(product, amount);
-//        order.addOrderLine(orderLine);
         }
         else {
             placeBackOrder(product, amount);
@@ -121,6 +132,10 @@ public class Webshop {
         }
     }
     
+    /**
+     * Fulfører ordre
+     * @param o orderen som fullføres
+     */
     public void completeOrder(Order o) {
         for(OrderLine ol : o.getOrderlineList()) {
             ol.getProductRef().changeInventory(-ol.getProductAmount());
@@ -128,12 +143,22 @@ public class Webshop {
         }
     }
     
+    
+    /**
+     * sjekke alle Product i productList og kjøper antall som trengs for å oppnå
+     * anbefalt inventory
+     */
     public void buyRecommendedInventory() {
         for(Product p : this.getProductList()) {
             Integer amountNeeded = p.getRecommendedInventory() - p.getInventory();
             if((amountNeeded * p.getPrice()) <= this.getBalance()) {
                 p.changeInventory(amountNeeded);
                 this.changeBalance(-(amountNeeded * p.getPrice()));
+                System.out.println("################");
+                System.out.println("Anbefalt inventory kjøpt:");
+                System.out.println(amountNeeded.toString() + " av " + p.getName()
+                        + " kjøpt for " + (amountNeeded * p.getPrice()) + " balance");
+                System.out.println("Ny balance er: " + this.getBalance());
             }
             else {
                 System.err.println("har ikke råd til å kjøpe inn anbefalt inventory");
@@ -176,11 +201,7 @@ public class Webshop {
         SupplierProduct sp = supplier.createSupplierProduct(10, product);
     }
     
-    public void placeOrder(String productName, Customer customer) {
-//        Product product = this.createProduct("Fiskestang", 20, 10);
-//        Supplier supplier = this.createSupplier();
-//        SupplierProduct sp = supplier.createSupplierProduct(10, product);
-//        Customer customer = this.createCustomer("Johnny");
+    public void placeOrder(String productName, int amount, Customer customer) {
         Product product = null;
         for(Product p : productList) {
             if(p.getName() == productName) {
@@ -189,7 +210,7 @@ public class Webshop {
         }
         Order order = this.createOrder(customer);
         if(product != null) {
-            this.addProductToOrder(product, 3, order);
+            this.addProductToOrder(product, amount, order);
         }
         else {
             System.err.println("placeOrder: Fant ikke produkt lik productName");
