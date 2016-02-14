@@ -14,6 +14,8 @@ import java.util.Queue;
  * @author piees
  */
 public class Webshop {
+    // webshop starter med 1000 balanse
+    Integer balance = 1000;
     // Lista over kunder er ArrayList ettersom den skal kunne få tilgang til 
     // kunder uten å måtte gå igjennom hele lista og den kan legge kunder på
     // på slutten av lista som har en lav stor O verdi
@@ -37,37 +39,51 @@ public class Webshop {
      * 
      * @param name 
      */
-    public void createCustomer(String name) {
+    public Customer createCustomer(String name) {
         Customer c = new Customer(name);
         customerList.add(c);
+        return c;
     }
     
-    public void createProduct(String name, int price, int recommendedInventory) {
+    public Product createProduct(String name, int price, int recommendedInventory) {
         Product p = new Product(name, price, recommendedInventory);
         productList.add(p);
+        return p;
     }
     
-    public void createSupplier() {
+    public Supplier createSupplier() {
         Supplier s = new Supplier();
         supplierList.add(s);
+        return s;
     }
     
-    public void createOrder(Customer customer) {
+    public Order createOrder(Customer customer) {
         Order o = new Order(customer);
         orderList.add(o);
+        return o;
     }
     
     public Supplier findCheapestSupplier(Product product) {
+        // holder for billigste supplier
         Supplier cheapestSupplier = null;
         for(Supplier supplier : supplierList) {
             for(SupplierProduct sp : supplier.getSupplierProductList())
                 if(sp.getProduct() == product) {
+                    // hvis det ikke er satt noe billigste supplier blir første
+                    // supplier som matcher valgt som billigst
                     if(cheapestSupplier == null) {
-                        System.out.println("FIIISH!");
+                        System.out.println("Fant billigste "
+                                + "supplier siden den var null fra før");
                         cheapestSupplier = supplier;
                     }
-                    else if(sp.getPrice() < cheapestSupplier.getSupplierProductList().get(cheapestSupplier.getSupplierProductList().indexOf(product)).getPrice()) {
-                        System.out.println("oisann");
+                    // om en supplier er allerede funnet blir det en sjekk
+                    // på om supplier er billigere enn den som er satt som 
+                    // billigst
+                    else if(sp.getPrice() < cheapestSupplier
+                            .getSupplierProductList()
+                            .get(cheapestSupplier.getSupplierProductList()
+                                    .indexOf(product)).getPrice()) {
+                        System.out.println("Fant ny billigste supplier");
                         cheapestSupplier = supplier;
                     }
                 }
@@ -77,16 +93,73 @@ public class Webshop {
     
     public void placeBackOrder(Product product, int amount) {
         BackOrder backOrder = new BackOrder(this, findCheapestSupplier(product));
+        SupplierProduct supplierProduct = null;
+        for(SupplierProduct sp : backOrder.getSupplier().getSupplierProductList()) {
+            if(sp.getProduct() == product) {
+                supplierProduct = sp;
+            }
+        }
+        if(supplierProduct != null) {
+            BackOrderLine bol = backOrder.createBackOrderLine(supplierProduct, amount);
+        }
+        else {
+            System.err.println("Couldn't find find supplierProduct in placeBackOrder");
+        }
+        System.out.println(backOrder.getBackOrderLineList());
+        for(BackOrderLine bo : backOrder.getBackOrderLineList()) {
+            changeBalance(-(amount * bo.getProductRef().getPrice()));
+            System.out.println("amount: "+ amount);
+            product.changeInventory(+amount);
+        }
     }
     
-    // not done, needs placeBackOrder
     public void addProductToOrder(Product product, int amount, Order order) {
-        if(product.getInventory() > amount) {
+        if((product.getInventory() - amount) >= 0) {
         OrderLine orderLine = new OrderLine(product, amount);
         order.addOrderLine(orderLine);
         }
         else {
-            //placeBackOrder goes here
+            System.out.println("product inventory: "+product.getInventory());
+            placeBackOrder(product, amount);
+            addProductToOrder(product, amount, order);
+            System.out.println("Not in stock\nBack order made succesfully"
+                    + "and product was added to order");
         }
+    }
+    
+    public void completeOrder(Order o) {
+        for(OrderLine ol : o.getOrderlineList()) {
+            ol.getProductRef().changeInventory(-ol.getProductAmount());
+            this.changeBalance(ol.getProductAmount() * ol.getProductRef().getPrice());
+        }
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void changeBalance(Integer balance) {
+        if((this.balance += balance) >= 0) {
+            this.balance += balance;
+        }
+        else {
+            System.err.println("Webshop can't afford this change in balance");
+        }
+    }
+
+    public ArrayList<Customer> getCustomerList() {
+        return customerList;
+    }
+
+    public ArrayList<Product> getProductList() {
+        return productList;
+    }
+
+    public LinkedList<Supplier> getSupplierList() {
+        return supplierList;
+    }
+
+    public Queue<Order> getOrderList() {
+        return orderList;
     }
 }

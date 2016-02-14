@@ -17,7 +17,7 @@ public class SupplierProduct {
     static private int idCounter = 0;
     private Product product;
     
-    private SupplierProduct(int price, Product product) {
+    SupplierProduct(int price, Product product) {
         this.price = price;
         this.product = product;
         idCounter++;

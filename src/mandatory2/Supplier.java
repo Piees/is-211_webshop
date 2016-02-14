@@ -33,15 +33,21 @@ public class Supplier {
         return supplierProductList;
     }
 
-    public void AddSupplierProduct(SupplierProduct sp) {
+    public void addSupplierProduct(SupplierProduct sp) {
         supplierProductList.add(sp);
+    }
+    
+    public SupplierProduct createSupplierProduct(int price, Product product) {
+        SupplierProduct sp = new SupplierProduct(price, product);
+        addSupplierProduct(sp);
+        return sp;
     }
 
     public Queue<BackOrder> getBackorderList() {
         return backorderList;
     }
 
-    public void addBackorder(BackOrder bo) {
+    public void addBackOrder(BackOrder bo) {
         backorderList.add(bo);
     }
 }

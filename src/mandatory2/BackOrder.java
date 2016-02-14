@@ -30,6 +30,12 @@ public class BackOrder {
     public void addBackOrderLine(BackOrderLine ol) {
         backOrderLineList.add(ol);
     }
+    
+    public BackOrderLine createBackOrderLine(SupplierProduct productRef, Integer productAmount) {
+        BackOrderLine bol = new BackOrderLine(productRef, productAmount);
+        this.addBackOrderLine(bol);
+        return bol;
+    }
 
     public Webshop getWebshop() {
         return webshop;
