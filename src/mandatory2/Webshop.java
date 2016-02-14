@@ -33,6 +33,7 @@ public class Webshop {
     Queue<Order> orderList = new LinkedList<>();
 
     public Webshop() {
+        createDummyData();
     }
     
     /**
@@ -167,5 +168,42 @@ public class Webshop {
 
     public Queue<Order> getOrderList() {
         return orderList;
+    }
+    
+    public void createDummyData() {
+        Product product = this.createProduct("Fiskestang", 20, 10);
+        Supplier supplier = this.createSupplier();
+        SupplierProduct sp = supplier.createSupplierProduct(10, product);
+    }
+    
+    public void placeOrder(String productName, Customer customer) {
+//        Product product = this.createProduct("Fiskestang", 20, 10);
+//        Supplier supplier = this.createSupplier();
+//        SupplierProduct sp = supplier.createSupplierProduct(10, product);
+//        Customer customer = this.createCustomer("Johnny");
+        Product product = null;
+        for(Product p : productList) {
+            if(p.getName() == productName) {
+                product = p;
+            }
+        }
+        Order order = this.createOrder(customer);
+        if(product != null) {
+            this.addProductToOrder(product, 3, order);
+        }
+        else {
+            System.err.println("placeOrder: Fant ikke produkt lik productName");
+        }
+        this.completeOrder(order);
+        for(OrderLine ol : order.getOrderlineList()) {
+            System.out.println("Produkt i order: "
+                    + ol.getProductRef().getName());
+            System.out.println("Antall produkter i order: "
+                    + ol.getProductAmount());
+            System.out.println("Webshop balance: "
+                    + this.getBalance());
+            System.out.println("Antall av produktet i inventory: "
+                    + this.getProductList().get(0).getInventory());
+        }
     }
 }
