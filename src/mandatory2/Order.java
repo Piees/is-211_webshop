@@ -30,6 +30,11 @@ public class Order {
     public void addOrderLine(OrderLine ol) {
         orderlineList.add(ol);
     }
+    public OrderLine createOrderLine(Product productRef, Integer productAmount) {
+        OrderLine ol = new OrderLine(productRef, productAmount);
+        this.addOrderLine(ol);
+        return ol;
+    }
 
 
     public Customer getCustomer() {

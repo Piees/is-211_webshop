@@ -15,9 +15,7 @@ public class Mandatory2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         Webshop ws = new Webshop();
-        System.out.println(ws.getBalance());
         Product product = ws.createProduct("Fiskestang", 20, 10);
         Supplier supplier = ws.createSupplier();
         SupplierProduct sp = supplier.createSupplierProduct(10, product);
@@ -27,10 +25,14 @@ public class Mandatory2 {
         ws.completeOrder(order);
         ws.buyRecommendedInventory();
         for(OrderLine ol : order.getOrderlineList()) {
-            System.out.println(ol.getProductRef().getName());
-            System.out.println(ol.getProductAmount());
-            System.out.println(ws.getBalance());
-            System.out.println(ws.getProductList().get(0).getInventory());
+            System.out.println("Produkt i order: "
+                    + ol.getProductRef().getName());
+            System.out.println("Antall produkter i order: "
+                    + ol.getProductAmount());
+            System.out.println("Webshop balance: "
+                    + ws.getBalance());
+            System.out.println("Antall av produktet i inventory: "
+                    + ws.getProductList().get(0).getInventory());
         }
     }
     

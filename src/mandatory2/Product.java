@@ -54,6 +54,10 @@ public class Product {
         this.inventory = inventory;
     }
     
+    /**
+     * Endre inventory for det enkelte produkt
+     * @param amount 
+     */
     public void changeInventory(int amount) {
         inventory += amount;
     }

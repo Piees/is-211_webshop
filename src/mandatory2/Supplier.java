@@ -37,6 +37,12 @@ public class Supplier {
         supplierProductList.add(sp);
     }
     
+    /**
+     * @param price
+     * @param product
+     * @return SupplierProduct som blir opprettet og lagt til i 
+     * supplierProductList
+     */
     public SupplierProduct createSupplierProduct(int price, Product product) {
         SupplierProduct sp = new SupplierProduct(price, product);
         addSupplierProduct(sp);

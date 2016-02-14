@@ -8,7 +8,7 @@ package mandatory2;
 /**
  *
  * @author piees
- * SupplierProduct blir laget med en produkt referanse og en produkt amount
+ * BackOrderLine blir laget med en produkt referanse og en produkt amount
  */
 public class BackOrderLine {
     private SupplierProduct productRef;

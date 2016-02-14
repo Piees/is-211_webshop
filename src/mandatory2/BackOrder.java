@@ -31,6 +31,12 @@ public class BackOrder {
         backOrderLineList.add(ol);
     }
     
+    /**
+     * 
+     * @param productRef
+     * @param productAmount
+     * @return BackOrderLine som er lagt til i this sin backOrderLineList
+     */
     public BackOrderLine createBackOrderLine(SupplierProduct productRef, Integer productAmount) {
         BackOrderLine bol = new BackOrderLine(productRef, productAmount);
         this.addBackOrderLine(bol);

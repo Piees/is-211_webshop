@@ -72,8 +72,6 @@ public class Webshop {
                     // hvis det ikke er satt noe billigste supplier blir første
                     // supplier som matcher valgt som billigst
                     if(cheapestSupplier == null) {
-                        System.out.println("Fant billigste "
-                                + "supplier siden den var null fra før");
                         cheapestSupplier = supplier;
                     }
                     // om en supplier er allerede funnet blir det en sjekk
@@ -83,7 +81,6 @@ public class Webshop {
                             .getSupplierProductList()
                             .get(cheapestSupplier.getSupplierProductList()
                                     .indexOf(product)).getPrice()) {
-                        System.out.println("Fant ny billigste supplier");
                         cheapestSupplier = supplier;
                     }
                 }
@@ -103,27 +100,23 @@ public class Webshop {
             BackOrderLine bol = backOrder.createBackOrderLine(supplierProduct, amount);
         }
         else {
-            System.err.println("Couldn't find find supplierProduct in placeBackOrder");
+            System.err.println("Fant ikke supplierProduct i placeBackOrder");
         }
-        System.out.println(backOrder.getBackOrderLineList());
         for(BackOrderLine bo : backOrder.getBackOrderLineList()) {
             changeBalance(-(amount * bo.getProductRef().getPrice()));
-            System.out.println("amount: "+ amount);
             product.changeInventory(+amount);
         }
     }
     
     public void addProductToOrder(Product product, int amount, Order order) {
         if((product.getInventory() - amount) >= 0) {
-        OrderLine orderLine = new OrderLine(product, amount);
-        order.addOrderLine(orderLine);
+            OrderLine orderLine = order.createOrderLine(product, amount);
+//        OrderLine orderLine = new OrderLine(product, amount);
+//        order.addOrderLine(orderLine);
         }
         else {
-            System.out.println("product inventory: "+product.getInventory());
             placeBackOrder(product, amount);
             addProductToOrder(product, amount, order);
-            System.out.println("Not in stock\nBack order made succesfully"
-                    + "and product was added to order");
         }
     }
     
@@ -142,7 +135,7 @@ public class Webshop {
                 this.changeBalance(-(amountNeeded * p.getPrice()));
             }
             else {
-                System.out.println("har ikke råd til å kjøpe inn anbefalt inventory");
+                System.err.println("har ikke råd til å kjøpe inn anbefalt inventory");
             }
         }
     }
@@ -156,7 +149,7 @@ public class Webshop {
             this.balance += balance;
         }
         else {
-            System.err.println("Webshop can't afford this change in balance");
+            System.err.println("Webshop har ikke råd til denne endring i balance");
         }
     }
 
