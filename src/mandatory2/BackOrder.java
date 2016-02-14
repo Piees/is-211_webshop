@@ -17,7 +17,7 @@ import java.util.Queue;
  */
 public class BackOrder {
     private Webshop webshop;
-    // orderline lista er queue ettersom backorders vil helst bli håndtert
+    // backOrderline lista er queue ettersom backorders vil helst bli håndtert
     // i kø etter når dem kom inn
     private Queue<BackOrderLine> backOrderLineList = new LinkedList<>();
     private final Supplier supplier;
