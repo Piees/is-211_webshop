@@ -133,6 +133,19 @@ public class Webshop {
             this.changeBalance(ol.getProductAmount() * ol.getProductRef().getPrice());
         }
     }
+    
+    public void buyRecommendedInventory() {
+        for(Product p : this.getProductList()) {
+            Integer amountNeeded = p.getRecommendedInventory() - p.getInventory();
+            if((amountNeeded * p.getPrice()) <= this.getBalance()) {
+                p.changeInventory(amountNeeded);
+                this.changeBalance(-(amountNeeded * p.getPrice()));
+            }
+            else {
+                System.out.println("har ikke råd til å kjøpe inn anbefalt inventory");
+            }
+        }
+    }
 
     public Integer getBalance() {
         return balance;

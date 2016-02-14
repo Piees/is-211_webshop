@@ -25,6 +25,7 @@ public class Mandatory2 {
         Order order = ws.createOrder(customer);
         ws.addProductToOrder(product, 3, order);
         ws.completeOrder(order);
+        ws.buyRecommendedInventory();
         for(OrderLine ol : order.getOrderlineList()) {
             System.out.println(ol.getProductRef().getName());
             System.out.println(ol.getProductAmount());

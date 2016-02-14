@@ -57,5 +57,13 @@ public class Product {
     public void changeInventory(int amount) {
         inventory += amount;
     }
+
+    public int getRecommendedInventory() {
+        return recommendedInventory;
+    }
+
+    public void setRecommendedInventory(int recommendedInventory) {
+        this.recommendedInventory = recommendedInventory;
+    }
     
 }
