@@ -1,0 +1,40 @@
+git: https://github.com/Piees/is-211_webshop
+Lister brukt og kommentarene:
+
+
+// backOrderline lista er queue ettersom backorders vil helst bli håndtert
+// i kø etter når dem kom inn
+private Queue<BackOrderLine> backOrderLineList = new LinkedList<>();
+
+
+// orderline lista er en stack ettersom det ikke har noe å si hvilken
+// rekkefølge det kommer ut så lenge det inneholder alle orderlinsa det skal
+private Stack<OrderLine> orderlineList = new Stack<>();
+
+// produkt lista er ArrayList ettersom den trenger effektivt å søke igjennom
+// lista for å se hvilke produkter som supplier kan supplere med
+ArrayList<SupplierProduct> supplierProductList = new ArrayList<>();
+
+// backorder lista er queue ettersom man gjerne vil håndtere backorders i
+// rekkefølgen de kommer inn for å ungå stack effekten hvor det kan ligge
+// noe helt på bunnen å aldri bli backordra ettersom det er FIFO
+Queue<BackOrder> backorderList = new LinkedList<>();
+
+// Lista over kunder er ArrayList ettersom den skal kunne få tilgang til
+// kunder uten å måtte gå igjennom hele lista og den kan legge kunder på
+// på slutten av lista som har en lav stor O verdi
+ArrayList<Customer> customerList = new ArrayList<>();
+
+// produkt lista er ArrayList ettersom det trengs å akksessere data som
+// ArrayList gjør raskt om den vet index og den har raske inserts bakfra
+// ettersom den gjerne inneholder en del utbyttninger kunne jeg her
+// vurdert å bruke LinkedList
+ArrayList<Product> productList = new ArrayList<>();
+
+// supplier lista er ArrayList ettersom det ikke er forventet mange
+// endringer men blir brukt til å søke opp produktene dem supplerer
+ArrayList<Supplier> supplierList = new ArrayList<>();
+
+// order lista er LinkedList implementert som Queue ettersom vi ønsker å
+// håndtere de eldste ordrene i lista
+Queue<Order> orderList = new LinkedList<>();

@@ -27,7 +27,7 @@ public class Webshop {
     ArrayList<Product> productList = new ArrayList<>();
     // supplier lista er ArrayList ettersom det ikke er forventet mange
     // endringer men blir brukt til å søke opp produktene dem supplerer
-    LinkedList<Supplier> supplierList = new LinkedList<>();
+    ArrayList<Supplier> supplierList = new ArrayList<>();
     // order lista er LinkedList implementert som Queue ettersom vi ønsker å
     // håndtere de eldste ordrene i lista
     Queue<Order> orderList = new LinkedList<>();
@@ -187,7 +187,7 @@ public class Webshop {
         return productList;
     }
 
-    public LinkedList<Supplier> getSupplierList() {
+    public ArrayList<Supplier> getSupplierList() {
         return supplierList;
     }
 
