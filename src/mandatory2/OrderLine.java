@@ -11,27 +11,27 @@ package mandatory2;
  * OrderLine blir opprettet med en produkt referanse og et antall
  */
 public class OrderLine {
-    private Product product_ref;
-    private Integer product_amount;
+    private Product productRef;
+    private Integer productAmount;
     
-    private OrderLine(Product product_ref, Integer product_amount) {
-        this.product_ref = product_ref;
-        this.product_amount = product_amount;        
+    OrderLine(Product productRef, Integer productAmount) {
+        this.productRef = productRef;
+        this.productAmount = productAmount;        
     }
 
-    public Product getProduct_ref() {
-        return product_ref;
+    public Product getProductRef() {
+        return productRef;
     }
 
-    public Integer getProduct_amount() {
-        return product_amount;
+    public Integer getProductAmount() {
+        return productAmount;
     }
 
-    public void setProduct_ref(Product product_ref) {
-        this.product_ref = product_ref;
+    public void setProductRef(Product productRef) {
+        this.productRef = productRef;
     }
 
-    public void setProduct_amount(Integer product_amount) {
-        this.product_amount = product_amount;
+    public void setProductAmount(Integer productAmount) {
+        this.productAmount = productAmount;
     }
 }

@@ -13,13 +13,13 @@ import java.util.Queue;
  * @author piees
  BackOrder må opprettes med informasjon om webshop og supplier som har
  produktene som skal bestilles. 
- Man legger deretter inn BackOrderLines i backorderline_list med addBackOrderLine()
+ Man legger deretter inn BackOrderLines i backOrderLineList med addBackOrderLine()
  */
 public class BackOrder {
     private Webshop webshop;
     // orderline lista er queue ettersom backorders vil helst bli håndtert
     // i kø etter når dem kom inn
-    private Queue<BackOrderLine> backorderline_list = new LinkedList<>();
+    private Queue<BackOrderLine> backOrderLineList = new LinkedList<>();
     private final Supplier supplier;
 
     public BackOrder(Webshop webshop, Supplier supplier) {
@@ -28,15 +28,19 @@ public class BackOrder {
     }
     
     public void addBackOrderLine(BackOrderLine ol) {
-        backorderline_list.add(ol);
+        backOrderLineList.add(ol);
     }
 
     public Webshop getWebshop() {
         return webshop;
     }
 
-    public Queue<BackOrderLine> getBackorderline_list() {
-        return backorderline_list;
+    public Queue<BackOrderLine> getBackOrderLineList() {
+        return backOrderLineList;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
     }
     
 }

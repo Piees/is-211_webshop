@@ -13,17 +13,17 @@ package mandatory2;
 public class Product {
     private String name;
     private int prod_id;
-    private int store_price;
+    private int price;
     private int inventory = 0;
-    private int recommended_inventory;
-    static private int prod_id_counter = 0;
+    private int recommendedInventory;
+    static private int prodIDCounter = 0;
     
-    private Product(String name, int price, int recommended_inventory) {
+    public Product(String name, int price, int recommendedInventory) {
         this.name = name;
-        this.store_price = price;
-        prod_id_counter++;
-        this.prod_id = prod_id_counter;
-        this.recommended_inventory = recommended_inventory;
+        this.price = price;
+        prodIDCounter++;
+        this.prod_id = prodIDCounter;
+        this.recommendedInventory = recommendedInventory;
     }
 
     public String getName() {
@@ -35,7 +35,7 @@ public class Product {
     }
 
     public int getPrice() {
-        return store_price;
+        return price;
     }
 
     public int getInventory() {
@@ -46,8 +46,8 @@ public class Product {
         this.name = name;
     }
 
-    public void setStore_price(int store_price) {
-        this.store_price = store_price;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public void setInventory(int inventory) {

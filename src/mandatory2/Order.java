@@ -15,20 +15,20 @@ import java.util.Stack;
  */
 public class Order {
     private Customer customer;
-    private int order_id;
-    private static int order_id_counter = 0;
+    private int orderID;
+    private static int orderIDCounter = 0;
     // orderline lista er en stack ettersom det ikke har noe å si hvilken
     // rekkefølge det kommer ut så lenge det inneholder alle orderlinsa det skal
-    private Stack<OrderLine> orderline_list = new Stack<>();
+    private Stack<OrderLine> orderlineList = new Stack<>();
     
-    private Order(Customer customer) {
+    Order(Customer customer) {
         this.customer = customer;
-        order_id_counter++;
-        order_id = order_id_counter;
+        orderIDCounter++;
+        orderID = orderIDCounter;
     }
     
     public void addOrderLine(OrderLine ol) {
-        orderline_list.add(ol);
+        orderlineList.add(ol);
     }
 
 
@@ -36,12 +36,12 @@ public class Order {
         return customer;
     }
 
-    public int getOrder_id() {
-        return order_id;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public Stack<OrderLine> getOrderline_list() {
-        return orderline_list;
+    public Stack<OrderLine> getOrderlineList() {
+        return orderlineList;
     }
     
 }

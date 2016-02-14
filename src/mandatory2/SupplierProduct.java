@@ -8,27 +8,27 @@ package mandatory2;
 /**
  *
  * @author piees
- * Supplier_Product er laget med en pris og produkt.
- * Dette er for at suppliers skal kunne sette en innkjøpspris for varer
+ SupplierProduct er laget med en pris og produkt.
+ Dette er for at suppliers skal kunne sette en innkjøpspris for varer
  */
-public class Supplier_Product {
+public class SupplierProduct {
     private int prod_id;
     private int price;
-    static private int id_counter = 0;
+    static private int idCounter = 0;
     private Product product;
     
-    private Supplier_Product(int price, Product product) {
+    private SupplierProduct(int price, Product product) {
         this.price = price;
         this.product = product;
-        id_counter++;
-        prod_id = id_counter;
+        idCounter++;
+        prod_id = idCounter;
     }
 
-    public int getProd_id() {
+    public int getProdID() {
         return prod_id;
     }
 
-    public void setProd_id(int prod_id) {
+    public void setProdID(int prod_id) {
         this.prod_id = prod_id;
     }
 
@@ -40,12 +40,12 @@ public class Supplier_Product {
         this.price = price;
     }
 
-    public static int getId_counter() {
-        return id_counter;
+    public static int getIdCounter() {
+        return idCounter;
     }
 
-    public static void setId_counter(int id_counter) {
-        Supplier_Product.id_counter = id_counter;
+    public static void setIdCounter(int idCounter) {
+        SupplierProduct.idCounter = idCounter;
     }
 
     public Product getProduct() {

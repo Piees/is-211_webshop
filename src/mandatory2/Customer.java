@@ -12,20 +12,20 @@ package mandatory2;
  */
 public class Customer {
     private String name;
-    private int cust_id;
-    static int cust_id_counter = 0;
+    private int custID;
+    static int custIDCounter = 0;
     
-    private Customer(String name) {
+    Customer(String name) {
         this.name = name;
-        cust_id_counter++;
-        cust_id = cust_id_counter;
+        custIDCounter++;
+        custID = custIDCounter;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getCust_id() {
-        return cust_id;
+    public int getCustID() {
+        return custID;
     }
 }
