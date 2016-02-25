@@ -171,7 +171,7 @@ public class Webshop {
     }
 
     public void changeBalance(Integer balance) {
-        if((this.balance += balance) >= 0) {
+        if((this.balance + balance) >= 0) {
             this.balance += balance;
         }
         else {
