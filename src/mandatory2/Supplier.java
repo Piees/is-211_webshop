@@ -5,8 +5,8 @@
  */
 package mandatory2;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -18,12 +18,15 @@ public class Supplier {
     private int supplier_id;
     static int supplierIDCounter = 0;
     // produkt lista er ArrayList ettersom den trenger effektivt å søke igjennom
-    // lista for å se hvilke produkter som supplier kan supplere med
+    // lista for å se hvilke produkter som supplier kan supplere med. jeg bruker 
+    // ikke treemap ettersom jeg ikke ser en naturlig sortering som gir utbytte
     ArrayList<SupplierProduct> supplierProductList = new ArrayList<>();
     // backorder lista er queue ettersom man gjerne vil håndtere backorders i
     // rekkefølgen de kommer inn for å ungå stack effekten hvor det kan ligge
     // noe helt på bunnen å aldri bli backordra ettersom det er FIFO
-    Queue<BackOrder> backOrderList = new LinkedList<>();
+    // nytt i denne er at jeg har endret queue implementasjonen til ArrayDeque
+    // av samme grunn som backOrderLineList
+    Queue<BackOrder> backOrderList = new ArrayDeque<>();
 
     public Supplier() {
         supplierIDCounter++;

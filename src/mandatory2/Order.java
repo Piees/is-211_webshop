@@ -6,6 +6,7 @@
 package mandatory2;
 
 import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -17,9 +18,12 @@ public class Order {
     private Customer customer;
     private int orderID;
     private static int orderIDCounter = 0;
-    // orderline lista er en stack ettersom det ikke har noe å si hvilken
-    // rekkefølge det kommer ut så lenge det inneholder alle orderlinsa det skal
-    private Stack<OrderLine> orderlineList = new Stack<>();
+    // orderline lista er en nå en LinkedBlockingQueue. Dette er for å motarbeide
+    // potensielle overbelastninger som kan skje i systemet. Dette kan skape en
+    // flaskehals men er en sted hvor jeg tror kan bli overbelastes i produksjon
+    // threading kunne bli brukt for å håndtere overbelasninger med andre
+    // strukturer for å fjerne flaskehalsen
+    private LinkedBlockingQueue<OrderLine> orderlineList = new LinkedBlockingQueue<>(75);
     
     Order(Customer customer) {
         this.customer = customer;
@@ -27,15 +31,11 @@ public class Order {
         orderID = orderIDCounter;
     }
     
-    public void addOrderLine(OrderLine ol) {
-        orderlineList.add(ol);
-    }
     public OrderLine createOrderLine(Product productRef, Integer productAmount) {
         OrderLine ol = new OrderLine(productRef, productAmount);
-        this.addOrderLine(ol);
+        orderlineList.add(ol);
         return ol;
     }
-
 
     public Customer getCustomer() {
         return customer;
@@ -45,7 +45,7 @@ public class Order {
         return orderID;
     }
 
-    public Stack<OrderLine> getOrderlineList() {
+    public LinkedBlockingQueue<OrderLine> getOrderlineList() {
         return orderlineList;
     }
     

@@ -3,38 +3,50 @@ Lister brukt og kommentarene:
 
 
 // backOrderline lista er queue ettersom backorders vil helst bli håndtert
-// i kø etter når dem kom inn
-private Queue<BackOrderLine> backOrderLineList = new LinkedList<>();
+// i kø etter når dem kom inn. jeg har i mandatory 2 gjort implementasjonen til ArrayDeque
+// da den etter stackoverflow skal være bedre til iterasjon og bruker mindre minne
+// source: http://stackoverflow.com/questions/6163166/why-is-arraydeque-better-than-linkedlist
+private Queue<BackOrderLine> backOrderLineList = new ArrayDeque<>();
 
 
-// orderline lista er en stack ettersom det ikke har noe å si hvilken
-// rekkefølge det kommer ut så lenge det inneholder alle orderlinsa det skal
-private Stack<OrderLine> orderlineList = new Stack<>();
+// orderline lista er en nå en LinkedBlockingQueue. Dette er for å motarbeide
+// potensielle overbelastninger som kan skje i systemet. Dette kan skape en
+// flaskehals men er en sted hvor jeg tror kan bli overbelastes i produksjon
+// threading kunne bli brukt for å håndtere overbelasninger med andre
+// strukturer for å fjerne flaskehalsen
+private LinkedBlockingQueue<OrderLine> orderlineList = new LinkedBlockingQueue<>(75);
 
 // produkt lista er ArrayList ettersom den trenger effektivt å søke igjennom
-// lista for å se hvilke produkter som supplier kan supplere med
+// lista for å se hvilke produkter som supplier kan supplere med. jeg bruker
+// ikke treemap ettersom jeg ikke ser en naturlig sortering som gir utbytte
 ArrayList<SupplierProduct> supplierProductList = new ArrayList<>();
 
 // backorder lista er queue ettersom man gjerne vil håndtere backorders i
 // rekkefølgen de kommer inn for å ungå stack effekten hvor det kan ligge
-// noe helt på bunnen å aldri bli backordra ettersom det er FIFO
-Queue<BackOrder> backorderList = new LinkedList<>();
+// noe helt på bunnen å aldri bli backordra ettersom det er FIFO.
+// nytt i denne er at jeg har endret queue implementasjonen til ArrayDeque
+// av samme grunn som backOrderLineList
+Queue<BackOrder> backorderList = new ArrayDeque<>();
 
 // Lista over kunder er ArrayList ettersom den skal kunne få tilgang til
 // kunder uten å måtte gå igjennom hele lista og den kan legge kunder på
 // på slutten av lista som har en lav stor O verdi
+// ingenting nytt her denne mandatory
 ArrayList<Customer> customerList = new ArrayList<>();
 
 // produkt lista er ArrayList ettersom det trengs å akksessere data som
 // ArrayList gjør raskt om den vet index og den har raske inserts bakfra
 // ettersom den gjerne inneholder en del utbyttninger kunne jeg her
 // vurdert å bruke LinkedList
+// ingenting nytt her denne mandatory
 ArrayList<Product> productList = new ArrayList<>();
 
 // supplier lista er ArrayList ettersom det ikke er forventet mange
 // endringer men blir brukt til å søke opp produktene dem supplerer
+// ingenting nytt her denne mandatory
 ArrayList<Supplier> supplierList = new ArrayList<>();
 
-// order lista er LinkedList implementert som Queue ettersom vi ønsker å
+// order lista er ArrayDeque implementert som Queue ettersom vi ønsker å
 // håndtere de eldste ordrene i lista
-Queue<Order> orderList = new LinkedList<>();
+// igjen er queue gjort til ArrayDeque for performance
+Queue<Order> orderList = new ArrayDeque<>();

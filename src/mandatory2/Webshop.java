@@ -5,8 +5,8 @@
  */
 package mandatory2;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -30,7 +30,7 @@ public class Webshop {
     ArrayList<Supplier> supplierList = new ArrayList<>();
     // order lista er LinkedList implementert som Queue ettersom vi ønsker å
     // håndtere de eldste ordrene i lista
-    Queue<Order> orderList = new LinkedList<>();
+    Queue<Order> orderList = new ArrayDeque<>();
 
     public Webshop() {
         createDummyData();

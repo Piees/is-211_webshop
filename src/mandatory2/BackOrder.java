@@ -5,7 +5,7 @@
  */
 package mandatory2;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
@@ -18,8 +18,10 @@ import java.util.Queue;
 public class BackOrder {
     private Webshop webshop;
     // backOrderline lista er queue ettersom backorders vil helst bli håndtert
-    // i kø etter når dem kom inn
-    private Queue<BackOrderLine> backOrderLineList = new LinkedList<>();
+    // i kø etter når dem kom inn. jeg har i mandatory 2 gjort implementasjonen til ArrayDeque
+    // da den etter stackoverflow skal være bedre til iterasjon og bruker mindre minne
+    // source: http://stackoverflow.com/questions/6163166/why-is-arraydeque-better-than-linkedlist
+    private Queue<BackOrderLine> backOrderLineList = new ArrayDeque<>();
     private final Supplier supplier;
 
     public BackOrder(Webshop webshop, Supplier supplier) {
