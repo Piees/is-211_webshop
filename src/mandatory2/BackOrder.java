@@ -39,7 +39,7 @@ public class BackOrder {
      */
     public BackOrderLine createBackOrderLine(SupplierProduct productRef, Integer productAmount) {
         BackOrderLine bol = new BackOrderLine(productRef, productAmount);
-        this.addBackOrderLine(bol);
+        addBackOrderLine(bol);
         return bol;
     }
 

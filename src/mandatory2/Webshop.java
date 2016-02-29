@@ -89,30 +89,7 @@ public class Webshop {
         return cheapestSupplier;
     }
     
-    /**
-     * Utfører en backOrder og gjør endringer i balance og inventory
-     * @param product
-     * @param amount 
-     */
-    public void placeBackOrder(Product product, int amount) {
-        BackOrder backOrder = new BackOrder(this, findCheapestSupplier(product));
-        SupplierProduct supplierProduct = null;
-        for(SupplierProduct sp : backOrder.getSupplier().getSupplierProductList()) {
-            if(sp.getProduct() == product) {
-                supplierProduct = sp;
-            }
-        }
-        if(supplierProduct != null) {
-            BackOrderLine bol = backOrder.createBackOrderLine(supplierProduct, amount);
-        }
-        else {
-            System.err.println("Fant ikke supplierProduct i placeBackOrder");
-        }
-        for(BackOrderLine bo : backOrder.getBackOrderLineList()) {
-            changeBalance(-(amount * bo.getProductRef().getPrice()));
-            product.changeInventory(+amount);
-        }
-    }
+
     
     /**
      * Legger til et produkt til order, om det ikke er nok inventory blir det
@@ -127,7 +104,23 @@ public class Webshop {
             OrderLine orderLine = order.createOrderLine(product, amount);
         }
         else {
-            placeBackOrder(product, amount);
+            Supplier cSupplier = findCheapestSupplier(product);
+            BackOrder backOrder = cSupplier.createBackOrder(this);
+            SupplierProduct sProduct = null;
+            for(SupplierProduct sp : cSupplier.getSupplierProductList()) {
+                if(sp.getProduct() == product) {
+                    sProduct = sp;
+                }
+            }
+            backOrder.createBackOrderLine(sProduct, amount);
+            
+            for(BackOrderLine bol : backOrder.getBackOrderLineList()) {
+                System.out.println(bol.getProductRef().getPrice());
+                System.out.println(bol.getProductAmount().toString());
+            }
+            
+            System.out.println(backOrder.getBackOrderLineList().toString());
+            cSupplier.processBackOrders(this);
             addProductToOrder(product, amount, order);
         }
     }
@@ -136,7 +129,7 @@ public class Webshop {
      * Fulfører ordre
      * @param o orderen som fullføres
      */
-    public void completeOrder(Order o) {
+    public void placeOrder(Order o) {
         for(OrderLine ol : o.getOrderlineList()) {
             ol.getProductRef().changeInventory(-ol.getProductAmount());
             this.changeBalance(ol.getProductAmount() * ol.getProductRef().getPrice());
@@ -159,11 +152,26 @@ public class Webshop {
                 System.out.println(amountNeeded.toString() + " av " + p.getName()
                         + " kjøpt for " + (amountNeeded * p.getPrice()) + " balance");
                 System.out.println("Ny balance er: " + this.getBalance());
+                System.out.println("################");
             }
             else {
                 System.err.println("har ikke råd til å kjøpe inn anbefalt inventory");
             }
         }
+    }
+    
+    /**
+     * 
+     * @return product by name
+     */
+    public Product getProductByName(String name) {
+        for(Product p : productList) {
+            if(p.getName().equals(name)) {
+                return p;
+            }
+        }
+        System.err.println("Webshop.getProductByName: could not find product by name.");
+        return null;
     }
 
     public Integer getBalance() {
@@ -199,32 +207,5 @@ public class Webshop {
         Product product = this.createProduct("Fiskestang", 20, 10);
         Supplier supplier = this.createSupplier();
         SupplierProduct sp = supplier.createSupplierProduct(10, product);
-    }
-    
-    public void placeOrder(String productName, int amount, Customer customer) {
-        Product product = null;
-        for(Product p : productList) {
-            if(p.getName() == productName) {
-                product = p;
-            }
-        }
-        Order order = this.createOrder(customer);
-        if(product != null) {
-            this.addProductToOrder(product, amount, order);
-        }
-        else {
-            System.err.println("placeOrder: Fant ikke produkt lik productName");
-        }
-        this.completeOrder(order);
-        for(OrderLine ol : order.getOrderlineList()) {
-            System.out.println("Produkt i order: "
-                    + ol.getProductRef().getName());
-            System.out.println("Antall produkter i order: "
-                    + ol.getProductAmount());
-            System.out.println("Webshop balance: "
-                    + this.getBalance());
-            System.out.println("Antall av produktet i inventory: "
-                    + this.getProductList().get(0).getInventory());
-        }
     }
 }
